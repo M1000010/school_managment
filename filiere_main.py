@@ -1,10 +1,14 @@
-from tkinter import Tk
+from pathlib import Path
+from tkinter import Tk, Canvas, Entry, Button, PhotoImage, Toplevel
+
 import mysql.connector
-from student_base import StudentController
-from student_def import studentUI
+
+import  Menu
+from filiere_base import filiereController
+from filiere_def import filiereUI
 
 
-class StudentMain:
+class filiereMain:
     def __init__(self):
         # Initialiser la connexion à la base de données MySQL
         self.connection = mysql.connector.connect(
@@ -13,13 +17,12 @@ class StudentMain:
             password="",  # Remplacez par votre mot de passe MySQL
             database="etudiant"  # Remplacez par le nom de votre base de données
         )
-        self.controller = StudentController(self.connection)
+        self.controller = filiereController(self.connection)
 
-        # Initialiser la fenêtre principale
         self.window = Tk()
 
         # Charger les ressources
-        self.ui = studentUI(self.window, self.controller)
+        self.ui = filiereUI(self.window, self.controller)
 
         # Initialiser l'interface utilisateur
         self.initialize_ui()
@@ -39,7 +42,11 @@ class StudentMain:
             self.window.resizable(False, False)
             self.window.mainloop()
 
-# Démarrer l'application
+
 if __name__ == "__main__":
-    app = StudentMain()
-    app.run()
+        app = filiereMain()
+        app.run()
+
+
+
+
