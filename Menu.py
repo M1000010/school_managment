@@ -11,13 +11,13 @@ import niveau_main
 import bloc_main
 import ens_main
 #import eval_main
-#import module_main
+import module_main
 import salle_main
-#import seance_main
+import seance_main
 #import specialite_main
 import student_main
 import groupe_main
-#import resultat_main
+import resultat_main
 
 
 
