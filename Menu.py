@@ -6,7 +6,7 @@ from tkinter import Tk, Canvas, Button, PhotoImage
 import paiement_main
 import filiere_main
 import niveau_main
-#import abs_ens_main
+import abs_ens_main
 #import abs_etd_main
 import bloc_main
 import ens_main
