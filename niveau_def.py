@@ -126,7 +126,7 @@ class niveauUI :
                 nom_niveau=self.nom_niveauF.get()
             )
 
-            self.controller.updateStudent(niveau)
+            self.controller.updateNiveau(niveau)
             self.loadNiveaux()
             self.clearForm()
             messagebox.showinfo("Succès", "niveau modifié avec succès.")

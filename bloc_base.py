@@ -16,7 +16,7 @@ class blocController:
 
     def getBlocById(self, id_bloc):
         cursor = self.connection.cursor()
-        query = ("""SELECT id_salle, nom_salle, capacite, id_bloc FROM salle WHERE id_salle = %s""")
+        query = ("""SELECT id_bloc, nom_bloc, nbr_salle FROM bloc WHERE id_bloc = %s""")
         cursor.execute(query, (id_bloc,))
         result = cursor.fetchone()
         cursor.close()
@@ -34,8 +34,8 @@ class blocController:
     def updateBloc(self, bloc):
         cursor = self.connection.cursor()
         query = """
-        UPDATE salle
-        SET nom_salle = %s, capacite = %s, id_bloc = %sWHERE id_salle = %s"""
+        UPDATE bloc
+        SET nom_bloc = %s, nbr_salle = %s WHERE id_bloc = %s"""
         cursor.execute(query, (bloc.nom_bloc, bloc.nbr_salle, bloc.id_bloc))
         self.connection.commit()
         cursor.close()

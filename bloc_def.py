@@ -141,7 +141,7 @@ class blocUI :
     def updateBloc(self):
         selected_item = self.tree.selection()
         if not selected_item:
-            messagebox.showinfo("Erreur", "Aucun étudiant sélectionné")
+            messagebox.showinfo("Erreur", "Aucun Bloc sélectionné")
             return
 
         try:
@@ -151,14 +151,13 @@ class blocUI :
             bloc = blocC(
                 id_bloc=int(id_bloc),
                 nom_bloc=self.nom_blocF.get(),
-                nbr_salle=self.nbr_salleF.get(),
+                nbr_salle=int(self.nbr_salleF.get()),
 
             )
 
             self.controller.updateBloc(bloc)
             self.loadBlocs()
             self.clearForm()
-            messagebox.showinfo("Succès", "Étudiant modifié avec succès.")
         except ValueError as e:
             messagebox.showerror("Erreur", f"Erreur de saisie : {str(e)}")
         except Exception as e:
@@ -245,7 +244,7 @@ class blocUI :
             item_data = self.tree.item(selected_item[0])
             bloc_data = item_data["values"]
             id_bloc = bloc_data[0]
-            bloc = self.controller.getStudentById(id_bloc)
+            bloc = self.controller.getBlocById(id_bloc)
             print("Bloc sélectionné :", bloc_data)
             self.fillForm(bloc)
 

@@ -34,7 +34,7 @@ class niveauController:
 
     def updateNiveau(self, niveau):
         cursor = self.connection.cursor()
-        query = """UPDATE niveau SET nom_niveau = %s WHERE id_etd = %s"""
+        query = """UPDATE niveau SET nom_niveau = %s WHERE id_niveau = %s"""
         cursor.execute(query, (niveau.nom_niveau, niveau.id_niveau))
         self.connection.commit()
         cursor.close()
