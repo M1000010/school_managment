@@ -7,7 +7,8 @@ class accUI:
         self.window = root
 
         self.ASSETS_PATH = Path(r"C:\Users\DELL\Desktop\projet BD\school_managment\assets\acceuil")
-
+        self.window.geometry("900x500+180+100")
+        self.window.configure(bg="#FFFFFF")
 
         self.canvas = Canvas(
             self.window,

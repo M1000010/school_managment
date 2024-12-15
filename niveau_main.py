@@ -5,7 +5,7 @@ import mysql.connector
 
 import Menu
 from niveau_base import niveauController
-from niveau_def import niveauUI
+import niveau_def
 
 
 class niveauMain :
@@ -23,7 +23,7 @@ class niveauMain :
         self.window = Tk()
 
         # Charger les ressources
-        self.ui = niveauUI(self.window, self.controller)
+        self.ui = niveau_def.niveauUI(self.window, self.controller)
 
         # Initialiser l'interface utilisateur
         self.initialize_ui()

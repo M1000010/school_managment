@@ -5,7 +5,7 @@ import mysql.connector
 
 import  Menu
 from filiere_base import filiereController
-from filiere_def import filiereUI
+import filiere_def
 
 
 class filiereMain:
@@ -22,7 +22,7 @@ class filiereMain:
         self.window = Tk()
 
         # Charger les ressources
-        self.ui = filiereUI(self.window, self.controller)
+        self.ui = filiere_def.filiereUI(self.window, self.controller)
 
         # Initialiser l'interface utilisateur
         self.initialize_ui()

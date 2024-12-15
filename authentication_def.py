@@ -11,7 +11,7 @@ class logUI:
 
         self.root = root
 
-        self.root.geometry("888x500")
+        self.root.geometry("888x500+180+100")
         self.root.configure(bg="#FFFFFF")
 
         self.canvas = Canvas(

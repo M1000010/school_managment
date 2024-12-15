@@ -6,7 +6,7 @@ import mysql.connector
 
 import Menu
 from bloc_base import blocController
-from bloc_def import blocUI
+import bloc_def
 
 
 class blocMain :
@@ -21,7 +21,7 @@ class blocMain :
         self.window = Tk()
         self.controller = blocController(self.connection)
 
-        self.ui = blocUI(self.window, self.controller)
+        self.ui = bloc_def.blocUI(self.window, self.controller)
 
         # Initialiser l'interface utilisateur
         self.initialize_ui()

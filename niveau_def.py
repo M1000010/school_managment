@@ -14,9 +14,9 @@ class niveauUI :
         self.ASSETS_PATH = self.OUTPUT_PATH / Path(r"C:\Users\DELL\Desktop\projet BD\school_managment\assets\niveau")
 
 
-        self.window.geometry("900x500")
-
+        self.window.geometry("900x500+180+100")
         self.window.configure(bg="#FFFFFF")
+
         self.canvas = Canvas(
             self.window,
             bg="#FFFFFF",
@@ -30,7 +30,6 @@ class niveauUI :
         # Store references to images
         self.images = {}
 
-        self.setup_ui()
         self.nom_niveauF = None
 
     def relative_to_assets(self, path: str) -> Path:

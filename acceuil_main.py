@@ -1,17 +1,16 @@
 from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 
-from acceuil_def import accUI
+import acceuil_def
 
 
 class accMain:
     def __init__(self):
 
         self.window = Tk()
-        self.window.geometry("900x500")
-        self.window.configure(bg="#FFFFFF")
 
-        self.ui = accUI(self.window)
+
+        self.ui = acceuil_def.accUI(self.window)
         self.initialize_ui()
 
     def initialize_ui(self):

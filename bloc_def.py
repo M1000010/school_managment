@@ -13,7 +13,7 @@ class blocUI :
         self.controller = controller
         self.OUTPUT_PATH = Path(__file__).parent
         self.ASSETS_PATH = self.OUTPUT_PATH / Path(r"C:\Users\DELL\Desktop\projet BD\school_managment\assets\bloc")
-        self.window.geometry("900x500")
+        self.window.geometry("900x500+180+100")
         self.window.configure(bg="#FFFFFF")
         self.canvas = Canvas(
             self.window,
@@ -28,7 +28,6 @@ class blocUI :
         # Store references to images
         self.images = {}
 
-        self.setup_ui()
     def relative_to_assets(self,path: str) -> Path:
         return self.ASSETS_PATH / Path(path)
 

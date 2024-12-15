@@ -5,7 +5,7 @@ import mysql.connector
 
 import Menu
 from salle_base import salleController
-from salle_def import salleUI
+import salle_def
 
 
 class salleMain:
@@ -20,7 +20,7 @@ class salleMain:
         self.controller = salleController(self.connection)
 
         self.window = Tk()
-        self.ui = salleUI(self.window, self.controller)
+        self.ui = salle_def.salleUI(self.window, self.controller)
 
         # Initialiser l'interface utilisateur
         self.initialize_ui()

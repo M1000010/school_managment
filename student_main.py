@@ -1,7 +1,7 @@
 from tkinter import Tk
 import mysql.connector
 from student_base import StudentController
-from student_def import studentUI
+import student_def
 
 
 class StudentMain:
@@ -19,7 +19,7 @@ class StudentMain:
         self.window = Tk()
 
         # Charger les ressources
-        self.ui = studentUI(self.window, self.controller)
+        self.ui = student_def.studentUI(self.window, self.controller)
 
         # Initialiser l'interface utilisateur
         self.initialize_ui()
