@@ -1,5 +1,6 @@
 from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Button, PhotoImage, messagebox
+import Menu
 
 from authentication_base import authController
 
@@ -87,12 +88,18 @@ class logUI:
 
         if self.controller.authenticate(username, password):
             messagebox.showinfo("Succès", "Authentification réussie!")
+            self.root.after(100, self.open_menu)
         else:
             messagebox.showerror("Erreur", "Nom d'utilisateur ou mot de passe incorrect")
     def on_button_click(self):
         print("Button clicked")
 
     def salam(self):
-        self.username = 'mehdi'
-        self.password = 'mehdi@123'
+        self.username = 'cristiano'
+        self.password = 'miakhalifa'
         self.controller.register(self.username, self.password)
+
+    def open_menu(self):
+        self.root.destroy()
+        menu_window = Menu.Menu()
+        menu_window.window.mainloop()

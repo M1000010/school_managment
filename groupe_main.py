@@ -1,14 +1,10 @@
-from pathlib import Path
-from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
-
+from tkinter import Tk
 import mysql.connector
-
-import ens_def
+from groupe_base import GroupController
+import groupe_def
 import Menu
-from ens_base import ensController
 
-
-class ensMain:
+class groupeMain:
     def __init__(self):
         # Initialiser la connexion à la base de données MySQL
         self.connection = mysql.connector.connect(
@@ -17,13 +13,13 @@ class ensMain:
             password="",  # Remplacez par votre mot de passe MySQL
             database="etudiant"  # Remplacez par le nom de votre base de données
         )
-        self.controller = ensController(self.connection)
+        self.controller = GroupController(self.connection)
 
         # Initialiser la fenêtre principale
         self.window = Tk()
 
         # Charger les ressources
-        self.ui = ens_def.ensUI(self.window, self.controller)
+        self.ui = groupe_def.groupeUI(self.window, self.controller)
 
         # Initialiser l'interface utilisateur
         self.initialize_ui()
@@ -37,17 +33,13 @@ class ensMain:
         self.ui.displaydata()
         self.ui.setup_ui()
 
+
     def run(self):
             # Lancer la boucle principale de l'application
             self.window.resizable(False, False)
             self.window.mainloop()
 
+# Démarrer l'application
 if __name__ == "__main__":
-    ens = ensMain()
-    ens.run()
-
-
-
-
-
-
+    app = groupeMain()
+    app.run()

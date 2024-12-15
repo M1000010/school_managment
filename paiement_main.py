@@ -3,12 +3,11 @@ from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 
 import mysql.connector
 
-import ens_def
-import Menu
-from ens_base import ensController
+import paiement_def
+from paiement_base import paiementController
 
 
-class ensMain:
+class paiementMain:
     def __init__(self):
         # Initialiser la connexion à la base de données MySQL
         self.connection = mysql.connector.connect(
@@ -17,13 +16,13 @@ class ensMain:
             password="",  # Remplacez par votre mot de passe MySQL
             database="etudiant"  # Remplacez par le nom de votre base de données
         )
-        self.controller = ensController(self.connection)
+        self.controller = paiementController(self.connection)
 
         # Initialiser la fenêtre principale
         self.window = Tk()
 
         # Charger les ressources
-        self.ui = ens_def.ensUI(self.window, self.controller)
+        self.ui = paiement_def.paiementUI(self.window, self.controller)
 
         # Initialiser l'interface utilisateur
         self.initialize_ui()
@@ -43,7 +42,7 @@ class ensMain:
             self.window.mainloop()
 
 if __name__ == "__main__":
-    ens = ensMain()
+    ens = paiementMain()
     ens.run()
 
 
