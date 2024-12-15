@@ -6,7 +6,7 @@ class accUI:
     def __init__(self, root):
         self.window = root
 
-        self.ASSETS_PATH = Path(r"C:\Users\DELL\Downloads\lblbala\Accueil\assets\frame0")
+        self.ASSETS_PATH = Path(r"C:\Users\DELL\Desktop\projet BD\school_managment\assets\acceuil")
 
 
         self.canvas = Canvas(
