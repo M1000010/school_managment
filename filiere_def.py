@@ -111,11 +111,11 @@ class filiereUI:
             id_filiere = values[0]
 
             filiere = filiereC(
-                id_filiere=int(id_filiere),
-                nom_filiere=self.nom_filiereF.get()
+                id_filiere = int(id_filiere),
+                nom_filiere = self.nom_filiereF.get()
             )
 
-            self.controller.updateStudent(filiere)
+            self.controller.updateFiliere(filiere)
             self.loadFilieres()
             self.clearForm()
             messagebox.showinfo("Succès", "niveau modifié avec succès.")

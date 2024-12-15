@@ -33,16 +33,6 @@ class studentUI:
         # Store references to images
         self.images = {}
 
-        self.cinF = None
-        self.cneF = None
-        self.nomF = None
-        self.prenomF = None
-        self.dateF = None
-        self.numF = None
-        self.mailF = None
-        self.filiereF = None
-        self.nivF = None
-        self.idF = None
 
         self.setup_ui()
 
@@ -187,6 +177,7 @@ class studentUI:
         self.loadStudents()
         self.clearForm()
 
+
     def updateStudent(self):
         selected_item = self.tree.selection()
         if not selected_item:
@@ -213,7 +204,6 @@ class studentUI:
             self.controller.updateStudent(student)
             self.loadStudents()
             self.clearForm()
-            messagebox.showinfo("Succès", "Étudiant modifié avec succès.")
         except ValueError as e:
             messagebox.showerror("Erreur", f"Erreur de saisie : {str(e)}")
         except Exception as e:
@@ -240,15 +230,15 @@ class studentUI:
 
     def fillForm(self, student):
         self.clearForm()
-        self.cinF.insert(0, student.cin)
-        self.cneF.insert(0, student.cne)
-        self.nomF.insert(0, student.nom)
-        self.prenomF.insert(0, student.prenom)
-        self.dateF.insert(0, student.date_naissance)
-        self.numF.insert(0, student.numero)
-        self.mailF.insert(0, student.email)
+        self.cinF.insert(0, student.cin_etd)
+        self.cneF.insert(0, student.cne_etd)
+        self.nomF.insert(0, student.nom_etd)
+        self.prenomF.insert(0, student.prenom_etd)
+        self.dateF.insert(0, student.date_n_etd)
+        self.numF.insert(0, student.num_etd)
+        self.mailF.insert(0, student.mail_etd)
         self.filiereF.insert(0, student.filiere)
-        self.nivF.insert(0, student.niv)
+        self.nivF.insert(0, student.id_niv)
 
     def clearForm(self):
         widgets = [self.cinF, self.cneF, self.nomF, self.prenomF, self.dateF,

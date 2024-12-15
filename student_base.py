@@ -41,6 +41,7 @@ class StudentController:
         num_etd = %s, mail_etd = %s, filiere = %s, id_niv = %s
         WHERE id_etd = %s
         """
+        print(student)
         cursor.execute(query, (student.cin_etd, student.cne_etd, student.nom_etd,
                                student.prenom_etd, student.date_n_etd,
                                student.num_etd, student.mail_etd,

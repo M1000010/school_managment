@@ -17,7 +17,7 @@ class filiereController:
 
     def getFiliereById(self, id_filiere):
         cursor = self.connection.cursor()
-        query = ("""SELECT id_niveau, nom_niveau FROM niveau WHERE id_niveau = %s""")
+        query = ("""SELECT id_filiere, nom_filiere FROM filiere WHERE id_filiere = %s""")
         cursor.execute(query, (id_filiere,))
         result = cursor.fetchone()
         cursor.close()
@@ -34,7 +34,7 @@ class filiereController:
 
     def updateFiliere(self, filiere):
         cursor = self.connection.cursor()
-        query = """UPDATE niveau SET nom_niveau = %s WHERE id_etd = %s"""
+        query = """UPDATE filiere SET nom_filiere = %s WHERE id_filiere = %s"""
         cursor.execute(query, (filiere.nom_filiere, filiere.id_filiere))
         self.connection.commit()
         cursor.close()
