@@ -3,7 +3,7 @@ from tkinter import Tk
 import mysql.connector
 
 from authentication_base import authController
-from authentication_def import logUI
+import authentication_def
 
 class authMain:
     def __init__(self):
@@ -17,7 +17,7 @@ class authMain:
         self.root = Tk()
 
 
-        self.ui = logUI(self.root, self.controller)
+        self.ui = authentication_def.logUI(self.root, self.controller)
         self.initialize_ui()
 
     def initialize_ui(self):

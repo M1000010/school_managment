@@ -9,9 +9,12 @@ class filiereUI:
         self.OUTPUT_PATH = Path(__file__).parent
         self.ASSETS_PATH = self.OUTPUT_PATH / Path(r"C:\Users\DELL\Desktop\projet BD\school_managment\assets\filiere")
         self.window = window
+
         self.controller = controller
+
         self.window.geometry("900x500+180+100")
         self.window.configure(bg="#FFFFFF")
+
         self.canvas = Canvas(
             self.window,
             bg="#FFFFFF",

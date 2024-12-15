@@ -9,7 +9,7 @@ class ensController:
 
     def addEns(self, ens):
         cursor = self.connection.cursor()
-        cursor.execute("INSERT INTO enseignant VALUES (%s, %s, %s, %s, %s, %s, %s, %s, s%)", ens.getValues())
+        cursor.execute("INSERT INTO enseignant VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", ens.getValues())
         self.connection.commit()
         cursor.close()
         messagebox.showinfo("Success", "Record has been added successfully.")
@@ -17,14 +17,14 @@ class ensController:
     def getEnsById(self, id_ens):
         cursor = self.connection.cursor()
         query = ("""SELECT id_ens, cin_ens, nom_ens, prenom_ens, date_n_ens, num_ens,
-                 mail_ens, id_specilite, id_module FROM enseignant WHERE id_ens = %s""")
+                 mail_ens, id_specialite, id_module FROM enseignant WHERE id_ens = %s""")
         cursor.execute(query, (id_ens,))
         result = cursor.fetchone()
         cursor.close()
         return ensC(*result)
 
 
-    def getAllStudents(self):
+    def getAllEnss(self):
         cursor = self.connection.cursor()
         query = """SELECT id_ens, cin_ens, nom_ens, prenom_ens, date_n_ens, num_ens, mail_ens, id_specialite, id_module
                  FROM enseignant"""
@@ -49,7 +49,7 @@ class ensController:
         cursor.close()
         messagebox.showinfo("Success", "Record has been updated successfully.")
 
-    def deleteStudent(self, id_ens):
+    def deleteEns(self, id_ens):
         cursor = self.connection.cursor()
         query = "DELETE FROM enseignant WHERE id_ens = %s"
         cursor.execute(query, (id_ens,))
