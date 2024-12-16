@@ -10,7 +10,7 @@ import abs_ens_main
 import abs_etd_main
 import bloc_main
 import ens_main
-#import eval_main
+import eval_main
 import module_main
 import salle_main
 import seance_main
