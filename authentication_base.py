@@ -20,19 +20,20 @@ class authController:
     def authenticate(self, username, password):
         try:
             cursor = self.connection.cursor()
-            query = "SELECT password FROM authentication WHERE username = %s"
+            query = "SELECT password FROM user WHERE username = %s"
             cursor.execute(query, (username,))
             result = cursor.fetchone()
 
             if result:
                 stored_password = result[0]
                 return bcrypt.checkpw(password.encode('utf-8'), stored_password.encode('utf-8'))
+            cursor.close()
+
             return False
         except Exception as e:
             print(f"Erreur lors de l'authentification : {e}")
             return False
-        finally:
-            cursor.close()
+
 
 
 

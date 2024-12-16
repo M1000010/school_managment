@@ -1,5 +1,9 @@
 from tkinter import messagebox
 
+import mysql.connector
+from fpdf import FPDF
+from tkinter import Tk, Label, Entry, Button, filedialog, messagebox
+
 from paiement import paiementC
 
 
@@ -50,3 +54,55 @@ class paiementController:
         cursor.close()
         messagebox.showinfo("Success","Record has been deleted successfully.")
 
+    def exporter_pdf(self):
+        """Exporte les données de la base de données dans un fichier PDF."""
+        cursor = self.connection.cursor()
+        try:
+            # Exécuter la requête pour récupérer les données
+            query = """SELECT id_paiement, montant, date_paiement, statut, id_etd FROM paiement"""
+            cursor.execute(query)
+            results = cursor.fetchall()
+            headers = [i[0] for i in cursor.description]
+
+            # Vérifier si des données ont été récupérées
+            if not results:
+                messagebox.showinfo("Information", "Aucun paiement trouvé pour l'exportation.")
+                return
+
+            # Créer un fichier PDF
+            pdf = FPDF()
+            pdf.set_auto_page_break(auto=True, margin=15)
+            pdf.add_page()
+            pdf.set_font("Arial", size=12)
+
+            # Ajouter un titre
+            pdf.set_font("Arial", style="B", size=16)
+            pdf.cell(200, 10, txt="Liste des Paiements", ln=True, align="C")
+
+            # Ajouter les en-têtes de colonnes
+            pdf.set_font("Arial", style="B", size=12)
+            for header in headers:
+                pdf.cell(40, 10, txt=str(header), border=1)
+            pdf.ln()
+
+            # Ajouter les données
+            pdf.set_font("Arial", size=12)
+            for row in results:
+                for value in row:
+                    pdf.cell(40, 10, txt=str(value), border=1)
+                pdf.ln()
+
+            # Sauvegarder le fichier PDF
+            fichier = filedialog.asksaveasfilename(
+                defaultextension=".pdf",
+                filetypes=[("PDF files", "*.pdf")],
+                title="Enregistrer le fichier PDF"
+            )
+            if fichier:
+                pdf.output(fichier)
+                messagebox.showinfo("Succès", "Les données ont été exportées avec succès dans le fichier PDF.")
+        except mysql.connector.Error as err:
+            messagebox.showerror("Erreur", f"Erreur lors de l'exécution de la requête : {err}")
+        finally:
+            cursor.close()
+        messagebox.showinfo("Success","PDF created successfully.")

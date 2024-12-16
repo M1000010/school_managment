@@ -1,8 +1,9 @@
 
 from pathlib import Path
-from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, ttk, messagebox, END
+from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, ttk, messagebox, END, filedialog
 from tkinter.ttk import Combobox
 
+from fpdf import FPDF
 from tkcalendar import DateEntry
 
 import Menu
@@ -60,8 +61,7 @@ class paiementUI :
         self.modifier = self.add_button(600.0, 433.0, 87.0, 22.0, "button_4.png", self.updatePaiement)
         self.supprimer = self.add_button(698.0, 433.0, 87.0, 22.0, "button_5.png", self.deletePaiement)
         self.menu = self.add_button(13.0, 12.0, 80.0, 25.02392578125, "button_6.png", self.open_menu)
-
-
+        self.pdf = self.add_button(137.0, 12.0, 116.0, 25.0, "btn_pdf.png", self.export_pdf)
 
     def add_date_entry(self, x, y, width, height, image_file, bg_x, bg_y):
         """
@@ -281,9 +281,57 @@ class paiementUI :
             print("paiement sélectionné :", paiement_data)
             self.fillForm(paiement)
 
+    def export_pdf(self):
+        """
+        Exporte les données d'une ligne sélectionnée dans le tableau sous forme de reçu au format PDF.
+        """
+        selected_item = self.tree.selection()
+        if not selected_item:
+            messagebox.showinfo("Erreur", "Aucune ligne sélectionnée dans le tableau.")
+            return
 
+        try:
+            # Récupérer les données de la ligne sélectionnée
+            values = self.tree.item(selected_item[0], 'values')
+            if not values:
+                messagebox.showinfo("Erreur", "Impossible de récupérer les données sélectionnées.")
+                return
 
+            # Créer un fichier PDF
+            pdf = FPDF()
+            pdf.add_page()
+            pdf.set_font("Arial", size=12)
 
+            # Ajouter le titre
+            pdf.set_font("Arial", style="B", size=14)
+            pdf.cell(200, 10, txt="Reçu de Paiement", ln=True, align="C")
+            pdf.ln(10)
+
+            # Ajouter les informations du paiement
+            pdf.set_font("Arial", size=12)
+            pdf.cell(200, 10, txt=f"ID Paiement : {values[0]}", ln=True)
+            pdf.cell(200, 10, txt=f"Montant : {values[1]} EUR", ln=True)
+            pdf.cell(200, 10, txt=f"Date de Paiement : {values[2]}", ln=True)
+            pdf.cell(200, 10, txt=f"Statut : {values[3]}", ln=True)
+            pdf.cell(200, 10, txt=f"ID Étudiant : {values[4]}", ln=True)
+            pdf.ln(10)
+
+            # Ajouter un message de remerciement
+            pdf.set_font("Arial", style="I", size=12)
+            pdf.cell(200, 10, txt="Merci pour votre paiement.", ln=True)
+            pdf.cell(200, 10, txt="Pour toute assistance, veuillez contacter le service administratif.", ln=True)
+
+            # Sauvegarder le fichier PDF
+            fichier = filedialog.asksaveasfilename(
+                defaultextension=".pdf",
+                filetypes=[("PDF files", "*.pdf")],
+                title="Enregistrer le reçu PDF"
+            )
+            if fichier:
+                pdf.output(fichier)
+                messagebox.showinfo("Succès", "Le reçu a été exporté avec succès en PDF.")
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Une erreur s'est produite lors de l'exportation : {str(e)}")
 
 
 

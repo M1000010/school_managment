@@ -23,7 +23,8 @@ class authMain:
     def initialize_ui(self):
 
         self.ui.setup_ui()
-        self.ui.salam()
+        #self.ui.salam()
+
     def run(self):
             # Lancer la boucle principale de l'application
             self.root.resizable(False, False)

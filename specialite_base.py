@@ -2,6 +2,7 @@ from tkinter import messagebox
 
 from filiere import filiereC
 from niveau import niveauC
+from specialite import specialiteC
 
 
 class specialiteController:
@@ -15,36 +16,36 @@ class specialiteController:
         cursor.close()
         messagebox.showinfo("Success", "Record has been added successfully.")
 
-    def getFiliereById(self, id_filiere):
+    def getSpecialiteById(self, id_specialite):
         cursor = self.connection.cursor()
-        query = ("""SELECT id_filiere, nom_filiere FROM filiere WHERE id_filiere = %s""")
-        cursor.execute(query, (id_filiere,))
+        query = ("""SELECT id_specialite, nom_specialite FROM specialite WHERE id_specialite = %s""")
+        cursor.execute(query, (id_specialite,))
         result = cursor.fetchone()
         cursor.close()
-        return filiereC(*result)
+        return specialiteC(*result)
 
 
-    def getAllFilieres(self):
+    def getAllSpecialites(self):
         cursor = self.connection.cursor()
-        query = """SELECT id_filiere, nom_filiere FROM filiere"""
+        query = """SELECT id_specialite, nom_specialite FROM specialite"""
         cursor.execute(query)
         results = cursor.fetchall()
         cursor.close()
         return results
 
-    def updateFiliere(self, filiere):
+    def updateSpecialite(self, specialite):
         cursor = self.connection.cursor()
-        query = """UPDATE filiere SET nom_filiere = %s WHERE id_filiere = %s"""
-        cursor.execute(query, (filiere.nom_filiere, filiere.id_filiere))
+        query = """UPDATE specialite SET nom_specialite = %s WHERE id_specialite = %s"""
+        cursor.execute(query, (specialite.nom_specialite, specialite.id_specialite))
         self.connection.commit()
         cursor.close()
         messagebox.showinfo("Success", "Record has been updated successfully.")
 
-    def deleteFiliere(self, id_filiere):
+    def deleteSpecialite(self, id_specialite):
         cursor = self.connection.cursor()
-        query = "DELETE FROM filiere WHERE id_filiere = %s"
-        cursor.execute(query, (id_filiere,))
+        query = "DELETE FROM specialite WHERE id_specialite = %s"
+        cursor.execute(query, (id_specialite,))
         self.connection.commit()
         cursor.close()
-        messagebox.showinfo("Success","Record has been deleted successfully.")
+        messagebox.showinfo("Success", "Record has been deleted successfully.")
 

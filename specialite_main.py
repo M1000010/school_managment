@@ -9,7 +9,7 @@ import specialite_def
 from specialite_base import specialiteController
 
 
-class spetialiteMain:
+class specialiteMain:
     def __init__(self):
         # Initialiser la connexion à la base de données MySQL
         self.connection = mysql.connector.connect(
@@ -45,7 +45,7 @@ class spetialiteMain:
 
 
 if __name__ == "__main__":
-        app = spetialiteMain()
+        app = specialiteMain()
         app.run()
 
 

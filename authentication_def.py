@@ -1,6 +1,7 @@
 from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Button, PhotoImage, messagebox
 import Menu
+import registre_main
 
 from authentication_base import authController
 
@@ -69,6 +70,21 @@ class logUI:
         )
         self.passwordF.place(x=88.0, y=319.0, width=306.0, height=24.0)
 
+        self.button_image_1 = PhotoImage(
+            file=self.relative_to_assets("btn_registre.png"))
+        self.button_1 = Button(
+            image=self.button_image_1,
+            borderwidth=0,
+            highlightthickness=0,
+            command= self.openRegistre,
+            relief="flat"
+        )
+        self.button_1.place(
+            x=126.0,
+            y=450.0,
+            width=246.0,
+            height=38.0
+        )
         # Button
         button_image_1 = PhotoImage(file=self.relative_to_assets("button_1.png"))
         self.button_1 = Button(
@@ -88,18 +104,21 @@ class logUI:
 
         if self.controller.authenticate(username, password):
             messagebox.showinfo("Succès", "Authentification réussie!")
+
             self.root.after(100, self.open_menu)
         else:
             messagebox.showerror("Erreur", "Nom d'utilisateur ou mot de passe incorrect")
     def on_button_click(self):
         print("Button clicked")
 
-    def salam(self):
-        self.username = 'mohamed'
-        self.password = 'miakhalifa'
-        self.controller.register(self.username, self.password)
+
 
     def open_menu(self):
         self.root.destroy()
         menu_window = Menu.Menu()
         menu_window.window.mainloop()
+
+    def openRegistre(self):
+        self.root.destroy()
+        registre_window = registre_main.registreMain()
+        registre_window.window.mainloop()

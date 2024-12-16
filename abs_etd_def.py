@@ -12,7 +12,7 @@ class abs_etdUI :
         self.OUTPUT_PATH = Path(__file__).parent
         self.ASSETS_PATH = self.OUTPUT_PATH / Path(r"C:\Users\DELL\Desktop\projet BD\school_managment\assets\abs_etd")
 
-        self.root.geometry("900x500")
+        self.root.geometry("900x500+180+100")
         self.root.configure(bg="#FFFFFF")
         self.canvas = Canvas(
             self.root,
@@ -274,7 +274,7 @@ class abs_etdUI :
 
         # Placement dans un canvas si nécessaire
         if self.canvas:
-            self.canvas.create_window(285.0, 330.0, window=self.tree)
+            self.canvas.create_window(296.0, 330.0, window=self.tree)
 
         # Liaison de l'événement de clic sur une ligne
         self.tree.bind("<ButtonRelease-1>", self.onRowClick)
