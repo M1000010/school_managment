@@ -1,7 +1,7 @@
 from pathlib import Path
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 import Menu
-class specialite:
+class specialiteUI:
     def __init__(self, window, controller):
 
         self.window = window

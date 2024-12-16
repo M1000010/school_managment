@@ -95,7 +95,7 @@ class logUI:
         print("Button clicked")
 
     def salam(self):
-        self.username = 'cristiano'
+        self.username = 'mohamed'
         self.password = 'miakhalifa'
         self.controller.register(self.username, self.password)
 

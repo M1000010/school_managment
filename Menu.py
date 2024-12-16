@@ -7,7 +7,7 @@ import paiement_main
 import filiere_main
 import niveau_main
 import abs_ens_main
-#import abs_etd_main
+import abs_etd_main
 import bloc_main
 import ens_main
 #import eval_main
@@ -117,7 +117,7 @@ class Menu:
 
     def open_abs_ens(self):
         self.window.destroy()
-        app_window = abs_ens_main.abs_ensMain()
+        app_window = abs_ens_main.Abs_ensMain()
         app_window.window.mainloop()
 
     def open_abs_etd(self):

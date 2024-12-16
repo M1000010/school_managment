@@ -1,15 +1,10 @@
-from pathlib import Path
-from tkinter import Tk, Canvas, Entry, Button, PhotoImage, Toplevel
-
+from tkinter import Tk
 import mysql.connector
+from abs_etd_base import Abs_etdController
+import abs_etd_def
+import Menu
 
-import  Menu
-
-import specialite_def
-from specialite_base import specialiteController
-
-
-class spetialiteMain:
+class abs_etdMain:
     def __init__(self):
         # Initialiser la connexion à la base de données MySQL
         self.connection = mysql.connector.connect(
@@ -18,12 +13,13 @@ class spetialiteMain:
             password="",  # Remplacez par votre mot de passe MySQL
             database="etudiant"  # Remplacez par le nom de votre base de données
         )
-        self.controller = specialiteController(self.connection)
+        self.controller = Abs_etdController(self.connection)
 
+        # Initialiser la fenêtre principale
         self.window = Tk()
 
         # Charger les ressources
-        self.ui = specialite_def.specialiteUI(self.window, self.controller)
+        self.ui = abs_etd_def.abs_etdUI(self.window, self.controller)
 
         # Initialiser l'interface utilisateur
         self.initialize_ui()
@@ -43,11 +39,7 @@ class spetialiteMain:
             self.window.resizable(False, False)
             self.window.mainloop()
 
-
+# Démarrer l'application
 if __name__ == "__main__":
-        app = spetialiteMain()
-        app.run()
-
-
-
-
+    app = abs_etdMain()
+    app.run()
