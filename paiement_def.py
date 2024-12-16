@@ -43,7 +43,7 @@ class paiementUI :
         self.add_image("image_2.png", 498.0, 59.0)
         self.add_image("image_3.png", 736.0, 308.0)
 
-        self.statutCH = ["en cours", "effectué", "annulé"]
+        self.statutCH = ["En attente", "Effectué", "Partiel"]
 
         # Adding entries
         self.barre_rechercheF = self.add_entry(110.0, 141.0, 676.0, 22.0, "entry_1.png", 448.0, 153.0)

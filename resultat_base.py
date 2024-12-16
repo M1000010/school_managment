@@ -109,3 +109,24 @@ class ResultatController:
         finally:
             cursor.close()
         messagebox.showinfo("Success","PDF created successfully.")
+
+    def getStatistiquesNotes(self):
+        """
+        Récupère les statistiques des notes depuis la base de données.
+        """
+        try:
+            cursor = self.connection.cursor()
+
+            # Requête pour compter les notes >= 10
+            cursor.execute("SELECT COUNT(*) FROM resultat WHERE notes >= 10")
+            plus_de_10 = cursor.fetchone()[0]
+
+            # Requête pour compter les notes < 10
+            cursor.execute("SELECT COUNT(*) FROM resultat WHERE notes < 10")
+            moins_de_10 = cursor.fetchone()[0]
+
+            # Retourner les résultats sous forme de dictionnaire
+            return {"plus_de_10": plus_de_10, "moins_de_10": moins_de_10}
+        except Exception as e:
+            print("Erreur SQL :", str(e))
+            return {"plus_de_10": 0, "moins_de_10": 0}
