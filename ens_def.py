@@ -1,7 +1,8 @@
 from pathlib import Path
-from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, messagebox, END, ttk
+from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, messagebox, END, ttk, filedialog
 from tkinter.ttk import Combobox
 
+from fpdf import FPDF
 from tkcalendar import DateEntry
 
 import Menu
@@ -134,6 +135,8 @@ class ensUI:
         self.rechercher = self.add_button(790.0, 141.0, 87.0, 23.0, "button_4.png", "button_4 clicked")
         self.menu = self.add_button(13.0, 12.0, 80.0, 25.02392578125, "button_5.png", self.open_menu)
         self.id = self.add_button(12.0, 141.0, 94.0, 23.0, "button_6.png", "button_6 clicked")
+
+        self.pdf = self.add_button(137.0, 12.0, 116.0, 25.0, "btn_pdf.png", self.export_enseignants_pdf)
 
         self.Table()
         self.loadEnss()
@@ -297,7 +300,56 @@ class ensUI:
             ens = self.controller.getEnsById(id_ens)
             print("Étudiant sélectionné :", ens_data)
             self.fillForm(ens)
+    def export_enseignants_pdf(self):
+        """
+        Exporte la liste des enseignants sous forme de tableau au format PDF.
+        """
+        try:
+            # Récupérer tous les enseignants
+            enseignants = self.controller.getAllEnss()
 
+            if not enseignants:
+                messagebox.showinfo("Erreur", "Aucun enseignant trouvé.")
+                return
+
+            # Créer un fichier PDF
+            pdf = FPDF()
+            pdf.add_page()
+            pdf.set_font("Arial", size=12)
+
+            # Ajouter le titre
+            pdf.set_font("Arial", style="B", size=14)
+            pdf.cell(200, 10, txt="Liste des Enseignants", ln=True, align="C")
+            pdf.ln(10)
+
+            # Ajouter les en-têtes des colonnes
+            pdf.set_font("Arial", style="B", size=12)
+            pdf.cell(40, 10, "ID", border=1, align="C")
+            pdf.cell(40, 10, "Nom", border=1, align="C")
+            pdf.cell(40, 10, "Prénom", border=1, align="C")
+            pdf.cell(40, 10, "ID Spécialité", border=1, align="C")
+            pdf.ln()
+
+            # Ajouter les données des enseignants
+            pdf.set_font("Arial", size=12)
+            for enseignant in enseignants:
+                pdf.cell(40, 10, str(enseignant[0]), border=1, align="C")  # ID Enseignant
+                pdf.cell(40, 10, enseignant[2], border=1, align="C")  # Nom
+                pdf.cell(40, 10, enseignant[3], border=1, align="C")  # Prénom
+                pdf.cell(40, 10, str(enseignant[7]), border=1, align="C")  # ID Spécialité
+                pdf.ln()
+
+            # Sauvegarder le fichier PDF
+            fichier = filedialog.asksaveasfilename(
+                defaultextension=".pdf",
+                filetypes=[("PDF files", "*.pdf")],
+                title="Enregistrer la liste des enseignants"
+            )
+            if fichier:
+                pdf.output(fichier)
+                messagebox.showinfo("Succès", "La liste des enseignants a été exportée avec succès en PDF.")
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Une erreur s'est produite lors de l'exportation : {str(e)}")
 
 
 
