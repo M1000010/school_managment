@@ -91,8 +91,8 @@ class resultatUI :
         self.supprimer = self.add_button(700.0, 422.0, 87.0, 22.0, "button_5.png", self.deleteResultat)
         self.menu = self.add_button(13.0, 12.0, 80.0, 25.02392578125, "button_6.png", self.open_menu)
         self.pdf = self.add_button(137.0, 12.0, 116.0, 25.0, "btn_pdf.png", self.export_pdf)
+        self.id = self.add_button(280.0, 12.0, 112.0, 25.0, "btn_statistique.png", "button_6 clicked")
 
-        # self.root.resizable(False, False)
         self.Table()
         self.loadResultats()
 
