@@ -1,7 +1,10 @@
 from pathlib import Path
-from tkinter import Tk, Canvas, Entry, Button, PhotoImage, END, ttk
+from tkinter import Tk, Canvas, Entry, Button, PhotoImage, END, ttk, filedialog
 from tkinter.ttk import Combobox
 
+from datetime import date
+
+from fpdf import FPDF
 from tkcalendar import DateEntry
 from student_base import *
 from student import *
@@ -146,6 +149,7 @@ class studentUI:
         self.add_button(13.0, 12.0, 80.0, 25.0, "button_5.png", self.open_menu)
         #id_filtre
         self.add_button(16.0, 141.0, 94.0, 23.0, "button_6.png", "button_6 clicked")
+        self.pdf = self.add_button(137.0, 12.0, 116.0, 25.0, "btn_pdf.png", self.export_students_pdf)
 
         #self.root.resizable(False, False)
         self.Table()
@@ -208,7 +212,6 @@ class studentUI:
             messagebox.showerror("Erreur", f"Une erreur s'est produite : {str(e)}")
 
     def deletestudent(self):
-        print("delete student")
         # Appeler la méthode onRowClick pour récupérer l'ID de l'étudiant sélectionné
         selected_item = self.tree.selection()  # Retourne un tuple avec l'ID de l'élément sélectionné
         if selected_item:
@@ -313,3 +316,63 @@ class studentUI:
             student = self.controller.getStudentById(student_id)
             print("Étudiant sélectionné :", student_data)
             self.fillForm(student)
+
+    def export_students_pdf(self):
+        """
+        Exporte la liste des étudiants sous forme de tableau au format PDF.
+        """
+        try:
+            # Récupérer tous les étudiants
+            students = self.controller.getAllStudents()
+
+            if not students:
+                messagebox.showinfo("Erreur", "Aucun étudiant trouvé.")
+                return
+
+            # Créer un fichier PDF
+            pdf = FPDF()
+            pdf.add_page()
+            pdf.set_font("Arial", size=12)
+
+            # Ajouter le titre
+            pdf.set_font("Arial", style="B", size=14)
+            pdf.cell(200, 10, txt="Liste des Étudiants", ln=True, align="C")
+            pdf.ln(10)
+
+            # Ajouter les en-têtes des colonnes
+            pdf.set_font("Arial", style="B", size=12)
+            pdf.cell(40, 10, "ID", border=1, align="C")
+            pdf.cell(40, 10, "Nom", border=1, align="C")
+            pdf.cell(40, 10, "Prénom", border=1, align="C")
+            pdf.cell(40, 10, "ID Filière", border=1, align="C")
+            pdf.cell(40, 10, "Date de Naissance", border=1, align="C")
+            pdf.ln()
+
+            # Ajouter les données des étudiants
+            pdf.set_font("Arial", size=12)
+            for student in students:
+                pdf.cell(40, 10, str(student[0]), border=1, align="C")  # ID Étudiant
+                pdf.cell(40, 10, student[3], border=1, align="C")  # Nom
+                pdf.cell(40, 10, student[4], border=1, align="C")  # Prénom
+                pdf.cell(40, 10, student[8], border=1, align="C")  # ID Filière
+
+                # Convertir la date en chaîne
+                date_naissance = student[5]
+                if isinstance(date_naissance, date):  # Check for datetime.date
+                    date_naissance = date_naissance.strftime('%Y-%m-%d')
+                else:
+                    date_naissance = str(date_naissance)  # Ensure fallback to string
+                pdf.cell(40, 10, date_naissance, border=1, align="C")
+                pdf.ln()
+
+            # Sauvegarder le fichier PDF
+            fichier = filedialog.asksaveasfilename(
+                defaultextension=".pdf",
+                filetypes=[("PDF files", "*.pdf")],
+                title="Enregistrer la liste des étudiants"
+            )
+            if fichier:
+                pdf.output(fichier)
+                messagebox.showinfo("Succès", "La liste des étudiants a été exportée avec succès en PDF.")
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Une erreur s'est produite lors de l'exportation : {str(e)}")

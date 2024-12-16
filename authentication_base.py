@@ -50,4 +50,3 @@ class authController:
             return False
         finally:
             cursor.close()
-
