@@ -1,5 +1,8 @@
 from pathlib import Path
-from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, END, ttk
+from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, END, ttk, filedialog
+
+from fpdf import FPDF
+
 import Menu
 from resultat_base import *
 from resultat import *
@@ -87,6 +90,7 @@ class resultatUI :
         self.modifier = self.add_button(602.0, 422.0, 87.0, 22.0, "button_4.png", self.updateResultat)
         self.supprimer = self.add_button(700.0, 422.0, 87.0, 22.0, "button_5.png", self.deleteResultat)
         self.menu = self.add_button(13.0, 12.0, 80.0, 25.02392578125, "button_6.png", self.open_menu)
+        self.pdf = self.add_button(137.0, 12.0, 116.0, 25.0, "btn_pdf.png", self.export_pdf)
 
         # self.root.resizable(False, False)
         self.Table()
@@ -235,9 +239,59 @@ class resultatUI :
             self.fillForm(resultat)
 
 
+    def export_pdf(self):
+        """
+        Exporte les données d'une ligne sélectionnée dans le tableau sous forme de bulletin au format PDF.
+        """
+        selected_item = self.tree.selection()
+        if not selected_item:
+            messagebox.showinfo("Erreur", "Aucune ligne sélectionnée dans le tableau.")
+            return
 
+        try:
+            # Récupérer les données de la ligne sélectionnée
+            values = self.tree.item(selected_item[0], 'values')
+            print(values)  # Affichage pour vérifier les valeurs
 
+            # Vérification du nombre d'éléments
+            if not values or len(values) < 4:
+                messagebox.showerror("Erreur", "La ligne sélectionnée ne contient pas assez de données.")
+                return
 
+            # Création du fichier PDF
+            pdf = FPDF()
+            pdf.add_page()
+            pdf.set_font("Arial", size=12)
+
+            # Ajouter le titre
+            pdf.set_font("Arial", style="B", size=14)
+            pdf.cell(200, 10, txt="Bulletin de Résultats", ln=True, align="C")
+            pdf.ln(10)
+
+            # Ajouter les informations
+            pdf.set_font("Arial", size=12)
+            pdf.cell(200, 10, txt=f"ID Résultat : {values[0]}", ln=True)
+            pdf.cell(200, 10, txt=f"Notes : {values[1]}", ln=True)
+            pdf.cell(200, 10, txt=f"Mention : {values[2]}", ln=True)
+            pdf.cell(200, 10, txt=f"ID Étudiant : {values[3]}", ln=True)
+            pdf.ln(10)
+
+            # Message final
+            pdf.set_font("Arial", style="I", size=12)
+            pdf.cell(200, 10, txt="Félicitations pour votre résultat !", ln=True)
+            pdf.cell(200, 10, txt="Pour toute assistance, contactez le service étudiant.", ln=True)
+
+            # Dialogue de sauvegarde
+            fichier = filedialog.asksaveasfilename(
+                defaultextension=".pdf",
+                filetypes=[("Fichiers PDF", "*.pdf")],
+                title="Enregistrer le bulletin PDF"
+            )
+            if fichier:
+                pdf.output(fichier)
+                messagebox.showinfo("Succès", "Le bulletin a été exporté avec succès en PDF.")
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Une erreur s'est produite lors de l'exportation : {str(e)}")
 
 
 
