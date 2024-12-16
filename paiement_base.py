@@ -106,3 +106,27 @@ class paiementController:
         finally:
             cursor.close()
         messagebox.showinfo("Success","PDF created successfully.")
+    def getStatistiquesPaiement(self):
+        """
+        Retourne le nombre de paiements pour chaque statut (Effectué, En attente, Partiel).
+        """
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute("""
+                SELECT statut, COUNT(*) 
+                FROM paiement 
+                GROUP BY statut
+            """)
+            result = cursor.fetchall()
+
+            # Transformer les résultats en dictionnaire
+            stats = {"Effectué": 0, "En attente": 0, "Partiel": 0}
+            for row in result:
+                statut, count = row
+                if statut in stats:
+                    stats[statut] = count
+
+            return stats
+        except Exception as e:
+            print(f"Erreur SQL : {e}")
+            return {"Effectué": 0, "En attente": 0, "Partiel": 0}

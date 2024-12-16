@@ -4,6 +4,8 @@ from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, ttk, messagebox
 from tkinter.ttk import Combobox
 
 from fpdf import FPDF
+from matplotlib import pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from tkcalendar import DateEntry
 
 import Menu
@@ -62,6 +64,7 @@ class paiementUI :
         self.supprimer = self.add_button(698.0, 433.0, 87.0, 22.0, "button_5.png", self.deletePaiement)
         self.menu = self.add_button(13.0, 12.0, 80.0, 25.02392578125, "button_6.png", self.open_menu)
         self.pdf = self.add_button(137.0, 12.0, 116.0, 25.0, "btn_pdf.png", self.export_pdf)
+        self.pai = self.add_button(280.0, 12.0, 112.0, 25.0, "btn_statistique.png", self.showStatistiquesPaiementGraph)
 
     def add_date_entry(self, x, y, width, height, image_file, bg_x, bg_y):
         """
@@ -334,11 +337,43 @@ class paiementUI :
             messagebox.showerror("Erreur", f"Une erreur s'est produite lors de l'exportation : {str(e)}")
 
 
+    def closeGraph(self):
+        """
+        Ferme le graphique et supprime les widgets associés.
+        """
+        if hasattr(self, "canvas_graph") and self.canvas_graph:
+            self.canvas_graph.get_tk_widget().destroy()
+            self.canvas_graph = None  # Supprimer la référence au graphe
+
+        if hasattr(self, "btn_close_graph") and self.btn_close_graph:
+            self.btn_close_graph.destroy()
 
 
+    def showStatistiquesPaiementGraph(self):
+        """
+        Affiche un graphique circulaire des paiements divisés par statut avec un bouton pour fermer le graphe.
+        """
+        # Récupérer les statistiques depuis le contrôleur
+        stats = self.controller.getStatistiquesPaiement()
+        labels = ["Effectué", "En attente", "Partiel"]
+        values = [stats["Effectué"], stats["En attente"], stats["Partiel"]]
 
+        # Créer le graphique circulaire
+        fig, ax = plt.subplots()
+        ax.pie(values, labels=labels, autopct='%1.1f%%', startangle=90, colors=["green", "orange", "red"])
+        ax.set_title("Répartition des Paiements par Statut")
 
+        # Intégrer le graphe dans l'interface Tkinter
+        self.canvas_graph = FigureCanvasTkAgg(fig, master=self.window)
+        self.canvas_graph.draw()
+        graph_widget = self.canvas_graph.get_tk_widget()
+        graph_widget.place(x=100, y=20)
 
+        # Ajouter un bouton pour fermer le graphe
+        self.btn_close_graph = Button(
+            self.window, text="Fermer", command=self.closeGraph, bg="red", fg="white"
+        )
+        self.btn_close_graph.place(x=650, y=70)  # Positionnement du bouton
 
 
 

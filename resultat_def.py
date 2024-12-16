@@ -92,7 +92,7 @@ class resultatUI :
         self.supprimer = self.add_button(700.0, 422.0, 87.0, 22.0, "button_5.png", self.deleteResultat)
         self.menu = self.add_button(13.0, 12.0, 80.0, 25.02392578125, "button_6.png", self.open_menu)
         self.pdf = self.add_button(137.0, 12.0, 116.0, 25.0, "btn_pdf.png", self.export_pdf)
-        self.id = self.add_button(280.0, 12.0, 112.0, 25.0, "btn_statistique.png", self.showStatistiquesGraph)
+        self.re = self.add_button(280.0, 12.0, 112.0, 25.0, "btn_statistique.png", self.showStatistiquesGraph)
 
         self.Table()
         self.loadResultats()
@@ -294,7 +294,7 @@ class resultatUI :
         except Exception as e:
             messagebox.showerror("Erreur", f"Une erreur s'est produite lors de l'exportation : {str(e)}")
 
-    def showStatistiquesGraph(self):
+    def showStatistiquesGraphs(self):
         # Appel à la méthode SQL pour obtenir les statistiques
         statistiques = self.controller.getStatistiquesNotes()
         plus_de_10 = statistiques["plus_de_10"]
@@ -318,11 +318,52 @@ class resultatUI :
 
 
 
+    def closeGraph(self):
+        """
+        Ferme le graphique affiché et supprime les widgets associés.
+        """
+        if hasattr(self, "graph_widget") and self.graph_widget:
+            self.graph_widget.destroy()  # Supprimer le widget du graphe
+            self.graph_widget = None
+
+        if hasattr(self, "close_button") and self.close_button:
+            self.close_button.destroy()  # Supprimer le bouton de fermeture
+            self.close_button = None
+
+        if hasattr(self, "canvas_graph") and self.canvas_graph:
+            self.canvas_graph.get_tk_widget().destroy()  # Supprimer le canvas matplotlib
+            self.canvas_graph = None
 
 
 
+    def showStatistiquesGraph(self):
+        # Appel à la méthode SQL pour obtenir les statistiques
+        statistiques = self.controller.getStatistiquesNotes()
+        plus_de_10 = statistiques["plus_de_10"]
+        moins_de_10 = statistiques["moins_de_10"]
 
+        # Créer le graphique avec matplotlib
+        fig, ax = plt.subplots()
+        categories = ["Notes >= 10", "Notes < 10"]
+        valeurs = [plus_de_10, moins_de_10]
 
+        # Créer un graphique en barres
+        ax.bar(categories, valeurs, color=['green', 'red'])
+        ax.set_title("Statistiques des Notes")
+        ax.set_ylabel("Nombre d'Étudiants")
+        ax.set_xlabel("Catégories")
+
+        # Afficher le graphique dans Tkinter
+        self.canvas_graph = FigureCanvasTkAgg(fig, master=self.root)
+        self.canvas_graph.draw()
+        self.graph_widget = self.canvas_graph.get_tk_widget()
+        self.graph_widget.place(x=100, y=10)  # Positionnement du graphe
+
+        # Ajouter un bouton "Fermer" pour supprimer le graphique
+        self.close_button = Button(
+            self.root, text="Fermer", command=self.closeGraph, bg="red", fg="white"
+        )
+        self.close_button.place(x=680, y=50)  # Positionnement du bouton
 
 
 
