@@ -171,7 +171,7 @@ class blocUI :
             id_bloc = self.tree.item(selected_item, 'values')[0]
 
             # Passer l'ID à la méthode du contrôleur
-            self.controller.deleteStudent(id_bloc)
+            self.controller.deleteBloc(id_bloc)
             self.loadBlocs()
             self.clearForm()
 

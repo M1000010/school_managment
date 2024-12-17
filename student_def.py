@@ -341,20 +341,20 @@ class studentUI:
 
             # Ajouter les en-têtes des colonnes
             pdf.set_font("Arial", style="B", size=12)
-            pdf.cell(40, 10, "ID", border=1, align="C")
+            pdf.cell(10, 10, "ID", border=1, align="C")
             pdf.cell(40, 10, "Nom", border=1, align="C")
             pdf.cell(40, 10, "Prénom", border=1, align="C")
-            pdf.cell(40, 10, "ID Filière", border=1, align="C")
+            pdf.cell(60, 10, "ID Filière", border=1, align="C")
             pdf.cell(40, 10, "Date de Naissance", border=1, align="C")
             pdf.ln()
 
             # Ajouter les données des étudiants
             pdf.set_font("Arial", size=12)
             for student in students:
-                pdf.cell(40, 10, str(student[0]), border=1, align="C")  # ID Étudiant
+                pdf.cell(10, 10, str(student[0]), border=1, align="C")  # ID Étudiant
                 pdf.cell(40, 10, student[3], border=1, align="C")  # Nom
                 pdf.cell(40, 10, student[4], border=1, align="C")  # Prénom
-                pdf.cell(40, 10, student[8], border=1, align="C")  # ID Filière
+                pdf.cell(60, 10, student[8], border=1, align="C")  # ID Filière
 
                 # Convertir la date en chaîne
                 date_naissance = student[5]

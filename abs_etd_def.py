@@ -123,7 +123,7 @@ class abs_etdUI :
         self.menu = self.add_button(13.0, 12.0, 80.0, 25.02392578125, "button_5.png", self.open_menu)
         self.id = self.add_button(13.0, 141.0, 94.0, 23.0, "button_6.png", "button_6 clicked")
 
-        self.choices = ["Matin", "Apres Midi"]
+        self.choices = ["Matinée", "Après-midi", "Journée entière"]
 
         # Adding entries
 

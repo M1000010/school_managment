@@ -313,7 +313,7 @@ class paiementUI :
             # Ajouter les informations du paiement
             pdf.set_font("Arial", size=12)
             pdf.cell(200, 10, txt=f"ID Paiement : {values[0]}", ln=True)
-            pdf.cell(200, 10, txt=f"Montant : {values[1]} EUR", ln=True)
+            pdf.cell(200, 10, txt=f"Montant : {values[1]} DH", ln=True)
             pdf.cell(200, 10, txt=f"Date de Paiement : {values[2]}", ln=True)
             pdf.cell(200, 10, txt=f"Statut : {values[3]}", ln=True)
             pdf.cell(200, 10, txt=f"ID Étudiant : {values[4]}", ln=True)

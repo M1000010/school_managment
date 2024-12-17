@@ -119,7 +119,7 @@ class abs_ensUI :
             self.add_image("image_2.png", 505.0, 59.0)
             self.add_image("image_3.png", 738.0, 305.0)
 
-            self.choices = ["Matin", "Apres-midi"]
+            self.choices = ["Matinée", "Après-midi", "Journée entière"]
 
             # Adding buttons
             self.rechercher = self.add_button(795.0, 141.0, 87.0, 23.0, "button_1.png", "button_1 clicked")

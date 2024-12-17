@@ -141,7 +141,7 @@ class seanceUI :
         self.add_image("image_2.png", 736.0, 296.0)
         self.add_image("image_3.png", 505.0, 59.0)
 
-        self.typeSE = ["Cours", "TD", "TP"]
+        self.typeSE = ["CM", "TD", "TP"]
 
         # Adding entries
 
